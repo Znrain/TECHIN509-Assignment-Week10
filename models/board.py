@@ -1,12 +1,17 @@
 class Board:
     def __init__(self):
+        # Initialize the 3x3 grid with spaces
         self.grid = [[" " for _ in range(3)] for _ in range(3)]
 
     def draw_board(self):
         """
         Draw the board of Tic-Tac-Toe game
         """
-
+        for i, row in enumerate(self.grid):
+            print(" | ".join(row))
+            if i < 2:
+                print("---------")
+            
     def update_board(self, row: int, col: int, symbol: str) -> bool:
         """
         Update the game board based on location selected by player
@@ -28,6 +33,23 @@ class Board:
         Returns:
             str: The winning symbol ('X' or 'O') if there is a winner, else an empty string
         """
+        # Check rows
+        for row in self.grid:
+            if row[0] == row[1] == row[2] and row[0] != " ":
+                return row[0]
+        
+        # Check columns
+        for col in range(3):
+            if self.grid[0][col] == self.grid[1][col] == self.grid[2][col] and self.grid[0][col] != " ":
+                return self.grid[0][col]
+
+        # Check diagonals
+        if self.grid[0][0] == self.grid[1][1] == self.grid[2][2] and self.grid[0][0] != " ":
+            return self.grid[0][0]
+        if self.grid[0][2] == self.grid[1][1] == self.grid[2][0] and self.grid[0][2] != " ":
+            return self.grid[0][2]
+
+        return ""  # No winner
 
     def is_full(self) -> bool:
         """
